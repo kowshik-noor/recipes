@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+</head>
+<body>
+    <h1>Welcome {{ user.first_name }}!</h1>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/logout">Logout</a>
+
+    <h1>{{ recipe.name }} &mdash; <a href="/recipes/{{ recipe.id }}/likes">{{ recipe.num_likes }} Likes</a></h1>
+
+    <h2>Description</h2>
+    <p>{{ recipe.description }}</p>
+    <h2>Under 30 Minutes</h2>
+    <p>{{ "Yes" if recipe.thirty_min != 0 else "No"}}</p>
+    <h2>Instructions</h2>
+    <p>{{ recipe.instructions }}</p>
+    <h2>Date Made</h2>
+    <p>{{ recipe.created_at }}</p>
+
+    {% if recipe.is_unliked: %}
+        <form action="/recipe/like/{{ recipe.id }}" method="POST">
+            <button>Like</button>
+        </form>
+    {% endif %}
+</body>
+</html>

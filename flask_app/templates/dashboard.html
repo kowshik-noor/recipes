@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+</head>
+<body>
+    <h1>Welcome {{ user.first_name }}!</h1>
+    <p>These are the recipes:</p>
+    <a href="/recipes/new">Create</a>
+    <a href="/logout">Logout</a>
+
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Likes</th>
+            <th>Under 30 Minutes?</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            {% for recipe in recipes: %}
+                <tr>
+                    <td>{{ recipe.name }}</td>
+                    <td><a href="/recipes/{{ recipe.id }}/likes">{{ recipe.num_likes }}</a></td>
+                    <td>{{ "Yes" if recipe.thirty_min != 0 else "No"}}</td>
+                    <td>
+                        <a href="/recipes/{{ recipe.id }}">View Instructions</a>
+                        {% if recipe.is_unliked: %}
+                            <form action="/recipe/like/{{ recipe.id }}" method="POST" style="display: inline;">
+                                <button>Like</button>
+                            </form>
+                        {% endif %}
+                        {% if user.id == recipe.user_id: %}
+                            <a href="/recipes/edit/{{ recipe.id }}">Edit</a>
+                            <a href="/recipes/delete/{{ recipe.id }}">Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+</head>
+
+<body>
+    <h1>Edit Recipe</h1>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/logout">Logout</a>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    <form action="/recipes/edit/{{recipe.id}}" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" value="{{recipe.name}}">
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" cols="30" rows="10">{{ recipe.description }}</textarea>
+        <label for="instructions">Instructions:</label>
+        <textarea name="instructions" id="instructions" cols="30" rows="10">{{ recipe.instructions }}</textarea>
+        <label for="created_at">Date Made On:</label>
+        <input type="date" name="created_at" id="created_at" value="{{recipe.created_at}}">
+        <p>Under 30 Minutes?</p>
+        <input type="radio" name="thirty_min" id="yes" value="1" {{ "checked" if recipe.thirty_min != 0 else "" }}>
+        <label for="yes">Yes</label>
+        <input type="radio" name="thirty_min" id="no" value="0" {{ "" if recipe.thirty_min != 0 else "checked" }}>
+        <label for="no">No</label>
+        <button>Create</button>
+    </form>
+</body>
+
+</html>
